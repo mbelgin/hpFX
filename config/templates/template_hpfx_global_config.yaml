@@ -1,0 +1,61 @@
+# >>> GLOBAL SHARED FOLDER <<<
+# The primary folder to keep experiment configurations and results coming from all of the MT4 instances.
+# This folder includes folders that are hard linked from all MT4 instances.
+# Indicators, Experts, test input and results all live here.
+# Please don't include thousands of indicators here, the startup time of terminals will be impacted and MT4 has a
+# certain limit for the number of indicators anyways. Just put what you need for backtesting.
+# This folder can be kept in a cloud storage if desired.
+#global_shared_folder: C:\Users\User\Documents\hpFX_Shared
+global_shared_folder: C:\fn
+
+
+# >>> GLOBAL HISTORY FOLDER <<<
+# MT4 history folder to keep chart history data (both '<data_folder>\history' and '<data_folder>\tester\history')
+# Note that this directory can get very big in size (hundreds of GBs, and even more), especially if you use tick data
+# spanning several years. It's kept separate from 'global_shared_folder', so you can keep it on a different drive.
+global_history_folder: F:\HPFX_SHARED_FXT_HST
+
+
+# >>> BROKER SERVER AND LOGIN INFORMATION <<<
+# IMPORTANT: This information must match exactly what you used to register hpFX
+broker_server: OANDA-Demo-1
+broker_login: XXXXXXX
+broker_password: XXXXXXX
+
+
+# >>> MT4 RESULTS FOLDER <<<
+# Don't change this unless you have a very good reason. MT4 refuses to read expert configurations (*.set files) and
+# create reports (*.htm) files outside of the 'tester' folder that's in the data folder so we create a shared directory
+# under global_shared_folder and create hard links from each MT4 installation as tester\<mt4_results_folder>
+# mt4_results_folder: tester\hpFX_results
+mt4_results_folder: hpFX_results
+
+
+# >>> TERMINAL INSTALLATIONS <<<
+# Installation directories for multiple MT4 terminals to be used for algorithm testing. You can add as many as you
+# wish, but usually more than one installation per physical core on your system will be excessive and inefficient.
+#
+# IMPORTANT: DO NOT USE AN INSTALLATION THAT IS ALSO USED FOR TRADING. hpFX will DESTROY all settings.
+mt4_terminals:
+    - C:\Program Files (x86)\FXChoice-C01
+    - C:\Program Files (x86)\FXChoice-C02
+    - C:\Program Files (x86)\FXChoice-C03
+    - C:\Program Files (x86)\FXChoice-C04
+    - C:\Program Files (x86)\FXChoice-C05
+    - C:\Program Files (x86)\FXChoice-C06
+    - C:\Program Files (x86)\FXChoice-C07
+    - C:\Program Files (x86)\FXChoice-C08
+    - C:\Program Files (x86)\FXChoice-C09
+    - C:\Program Files (x86)\FXChoice-C10
+    - C:\Program Files (x86)\FXChoice-C11
+    - C:\Program Files (x86)\FXChoice-C12
+    - C:\Program Files (x86)\FXChoice-C13
+    - C:\Program Files (x86)\FXChoice-C14
+    - C:\Program Files (x86)\FXChoice-C15
+    - C:\Program Files (x86)\FXChoice-C16
+
+# If a MT4 instance is already open, hpFX cannot start use it for testing. To prevent this from happening, hpFX
+# must close all open instances first. This should only impact the installations you configured here. If you have other
+# MT4 installations used for real trading, it should be safe.
+closeMt4Instances: true
+
