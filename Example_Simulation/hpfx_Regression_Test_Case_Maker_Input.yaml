@@ -1,0 +1,25 @@
+# 20250814
+# Regression Testing Suite with one Test per
+# each supported representation
+
+TestBatFile: run_regression_tests.bat
+TestCategory: REG-DEV
+ExpertTemplate: ..\Example_Simulation\regression_properties.set
+hpFXTemplate: ..\Example_Simulation\hpfx_Regression_Sim.yaml
+ExpertsPath: REGINP-DEV
+
+BL:
+ENTRY:
+    - PARABOLIC_SAR_b1xbl |BASELINECROSS| ;hpfxind\\S\\Parabolic;1
+    - CCI_HISTOGRAM_b1_b2 |HISTOGRAM| ;hpfxind\\S\\hpFX\\CCI_Histogram;1,2
+    - FXSNIPER_ERG_CCI_b3x0 |ONELEVELCROSS| ;hpfxind\\S\\hpFX\\FX Sniper's Ergodic_CCI;3;0
+    - FXSNIPER_ERG_CCI_b1xb2 |TWOLINESCROSS| ;hpfxind\\S\\hpFX\\FX Sniper's Ergodic_CCI;1,2
+    - FXSNIPER_ERG_CCI_b2xEMA14 |LINEMACROSS| ;hpfxind\\S\\hpFX\\FX Sniper's Ergodic_CCI;2;14,1
+    - LSMA_COLOR_b2_b3 |SLOPE|;hpfxind\\S\\hpFX\\LSMA_Color;1
+    - RSIOMA_b1_20-80 |TWOLEVELCROSS|   ;hpfxind\\S\\hpFX\\rsioma;1;20,80
+    - SILVERTREND_SIGNAL |ARROWS| ;hpfxind\\S\\hpFX\\SilverTrend_Signal;1,2
+CONF:
+VOL:
+EXIT:
+Entry_Permutations: False
+ENTRY_PERMS:

@@ -1,0 +1,27 @@
+# 20250814
+# Regression Testing Suite with one Test per
+# each supported representation
+TestCategory: REGRESSION
+TestUniqueName:
+TestExpert: hpFX_Engine.ex4
+TestExpertParameters: Set_Files\\regression_properties.set
+TestSymbolsList: REGRESSION
+TestPeriod: Daily
+TestModel: 0
+TestSpread: 50
+TestOptimization: false
+TestFromDate: 2021.01.01
+TestToDate: 2024.01.01
+REGRESSION:
+- AUDCAD
+- AUDCHF
+- AUDJPY
+- AUDUSD
+- EURJPY
+- EURUSD
+- GBPJPY
+- GBPUSD
+- NZDUSD
+- USDCAD
+- USDCHF
+- USDJPY

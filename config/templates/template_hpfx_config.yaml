@@ -1,0 +1,110 @@
+# hpFX Test Configuration File
+
+# IMPORTANT:
+#  - Arguments provided on the command line always take precedence over what's defined in this input file.
+#  - Only the parameters in this file are supported. If you specify others, they'll be ignored, even if
+#    they may be valid for terminal.exe
+
+# Puts test results under different folders corresponding to different categories which should be analysed together.
+# For example C1_Only, C1+C2, BL+C1+C2, C1+C2+Vol... You get the point. No special characters, please.
+# OPTIONAL (all tests will be placed under the same directory if left blank)
+TestCategory: SEE_TEST_MAKER_INPUT
+
+# 'testUniqueName' is a unique name you can give to this test. Folders for configurations and results are named after it.
+# Make sure you use a unique name to prevent overwriting previously created results, especially if you are running
+# variations of the same test (different spread, time frame etc).
+# hpFX will append the date range automatically to it minimize mistakes: E.g.
+# Given testUniqueName: 'C1_SSL_C2_RVI_V_ADX'  --> created folder name: 'C1_SSL_C2_RVI_V_ADX-20180101-20190101'
+# If this parameter is not defined, then it'll be generated after the TestExpertParameters. E.g.:
+# Given TestExpertParameters: 'inputs\C1_SSL_C2_RVI_V_ADX.set' --> created folder name: 'C1_SSL_C2_RVI_V_ADX-20180101-20190101'
+# OPTIONAL (leave blank if you want to be generated after TestExpertParameters)
+TestUniqueName:
+
+# The name of the EA.
+# REQUIRED
+TestExpert: hpFX_Engine.ex4
+
+# The experiment configuration (*.set file). It must be provided as a relative path (e.g. inputs\test.set). Make sure
+# the corresponding folders or files exist under the 'mt4_results_folder' as defined in global_config.yaml.
+# REQUIRED
+TestExpertParameters: 
+
+# Custom pairs list. Scroll down to see examples for "ALL" and "MAJOR".
+# You can create your own custom lists in a similar way.
+# Do NOT list specific pairs here, just provide the name you gave to the pairs list.
+# REQUIRED
+TestSymbolsList: ALL
+
+# Matches the values in "Period:" drop down list exactly (e.g. M15, H1, H4, Daily, etc)
+# Currently only Daily is supported!
+# REQUIRED
+TestPeriod: Daily
+
+# Options corresponding to the "Model:" drop down list
+# Important: "Control Points" is the recommended setting for tests with Daily candles
+# 0: Every tick
+# 1: Control Points
+# 2: Open prices only
+# REQUIRED
+TestModel: 1
+
+# Options corresponding to the "Spread:" drop down list
+# ('Current' is not recommended, especially during the after market hours)
+# REQUIRED
+TestSpread: 50
+
+# Toggle Optimization
+# REQUIRED
+TestOptimization: false
+
+# 'From' and 'To' dates, in 'YYYY.MM.DD' format. Please adhere to this format strictly.
+# REQUIRED
+TestFromDate: 2016.01.01
+TestToDate: 2022.01.01
+
+# "ALL" Pairs
+ALL:
+  - AUDCAD
+  - AUDCHF
+  - AUDJPY
+  - AUDNZD
+  - AUDUSD
+  - CADCHF
+  - CADJPY
+  - CHFJPY
+  - EURGBP
+  - EURAUD
+  - EURCAD
+  - EURCHF
+  - EURJPY
+  - EURNZD
+  - EURUSD
+  - GBPAUD
+  - GBPCAD
+  - GBPCHF
+  - GBPJPY
+  - GBPNZD
+  - GBPUSD
+  - NZDCAD
+  - NZDCHF
+  - NZDJPY
+  - NZDUSD
+  - USDCAD
+  - USDCHF
+  - USDJPY
+
+# "MAJOR" Pairs
+MAJOR:
+  - EURUSD
+  - USDJPY
+  - GBPUSD
+  - USDCHF
+  - USDCAD
+  - AUDUSD
+  - NZDUSD
+  - GBPJPY
+
+SHORTLIST:
+  - AUDCAD
+
+  

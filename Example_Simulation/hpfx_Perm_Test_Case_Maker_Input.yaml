@@ -1,0 +1,171 @@
+# PLEASE READ ALL INSTRUCTIONS CAREFULLY.
+
+# Name of the .bat file to be generated for launching all test combinations created by this tool.
+# You can choose any name, but avoid whitespace and special characters.
+# IMPORTANT: The filename must use the '.bat' suffix (e.g., 'run_all_tests.bat')
+
+TestBatFile: run_all_permutation_tests.bat
+
+# Name of the subfolder where results for this analysis will be stored.
+# Use this to organize different experiments into separate folders.
+# Examples: ENTRY_Only, ENTRY+C1, BL+ENTRY+C2, ENTRY+C2+Vol. Avoid special characters.
+# OPTIONAL: If left blank, all results will be placed in the same parent directory.
+
+TestCategory: HPFX_PERMUTATIONS
+
+# A sample expert configuration template (*.set) used to define hpFX simulation settings.
+# Create this by loading hpFX_Engine.mq4 in MT4's Strategy Tester, adjusting the settings, and saving as a .set file.
+# All test cases will inherit settings from this file, except for indicator-specific parameters.
+# Common parameters (e.g., risk %, TP MULTIPLIER) will remain consistent across all tests—ensure they match your intended setup.
+# The file itself remains unchanged during execution and can be reused across runs.
+# Specify either an absolute path or a path relative to the current working directory (usually the `bin` folder).
+
+ExpertTemplate: ..\Example_Simulation\my_test_EA_properties.set
+
+# An hpFX configuration template (*.yaml) used to construct test input files.
+# Only the 'TestUniqueName:' and 'TestExpertParameters:' sections will be modified.
+# All other fields (e.g., TestFromDate:, TestToDate:, TestSymbolsList:) must already match your intended test setup.
+# This file remains unchanged during execution and can be reused across runs.
+# Specify either an absolute path or a path relative to the execution directory.
+
+hpFXTemplate: ..\Example_Simulation\hpfx_EXAMPLE_SINGLE_BATCH.yaml
+
+# Path to the folder where auto-generated expert configuration files (*.set) and hpFX configuration files (*.yaml) will be saved.
+# These files are created for each individual simulation run, making re-runs possible and serving as detailed, self-describing records of the run conditions.
+# This path must be relative to the shared data folder (mt4_results_folder in global_config.yaml).
+# Do NOT provide an absolute path here.
+
+ExpertsPath: INPUTS_FOR_HPFX_PERMUTATIONS
+
+
+
+
+
+
+
+
+
+
+
+
+
+# RETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIRED
+
+# Test modes that define how indicators are used and in what order.
+
+# TestMode: 1  
+# Entry → Conf, BL, Vol → Exit  
+# Enter when the Entry indicator signals a Buy/Sell, and all of Confirmation, Baseline, and Volatility indicators agree. 
+# Exit when the Exit indicator signals.
+
+# TestMode: 2  
+# BL → Entry, Conf, Vol → Exit  
+# Enter when the Baseline indicator signals a Buy/Sell, and Entry, Confirmation, and Volatility indicators agree. 
+# Exit when the Exit indicator signals.
+
+# TestMode: 3  
+# Entry | BL → Conf, Vol → Exit  
+# Enter when either Entry OR Baseline triggers a signal, and both Confirmation and Volatility indicators agree. 
+# Exit when the Exit indicator signals.
+# In all modes, at least one indicator that defines the Entry condition is required.
+# Missing optional indicators are silently ignored.
+# For example, TestMode=2 will fail if BL is missing, since it's the only entry trigger in that mode.
+# However, it's valid to omit Entry in this mode, as Confirmation and Volatility can still be used to confirm the trade.
+# If Exit is missing, trades will close when the Take Profit (TP) defined in the .set file is reached.
+# TestMode: 1
+# RETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIRED
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# List of indicators to be used in the simulations.
+#
+# Indicators must be organized under the following required categories:
+# BL, ENTRY, CONF, VOL, EXIT
+#
+# All category headers must be present in the configuration file. If no indicators are used in a category,
+# its section can be left empty, but it must still exist—hpFX will raise an error otherwise.
+#
+# You may reuse the same indicator in multiple roles (e.g., an ENTRY indicator can also serve as an EXIT indicator
+# with reversed logic), as long as it is defined under the appropriate categories with valid definitions.
+#
+# Format: <given name> | <indicator type> | <indicator definition>
+#
+# 'given name' is a human-readable label for the indicator, such as 'ENTRY_ADX'.
+# This name will appear in filenames for generated expert configuration files (*.set),
+# e.g. 'BL_KIJUN-SEN+ENTRY_ADX.set'.
+#
+# 'indicator type' must be one of the following (with the required definition format shown in comments):
+#   BASELINECROSS   // <parameters>;<indicator_file>;<buffer>
+#   TWOLINESCROSS   // <parameters>;<indicator_file>;<buffer1>,<buffer2>
+#   ONELEVELCROSS   // <parameters>;<indicator_file>;<buffer>;<level>
+#   TWOLEVELCROSS   // <parameters>;<indicator_file>;<(+/-)buffer>;<high_level>,<low_level>
+#   SLOPE           // <parameters>;<indicator_file>;<buffer>
+#   HISTOGRAM       // <parameters>;<indicator_file>;<buffer1>,<buffer2>
+#   LINEMACROSS     // <parameters>;<indicator_file>;<buffer1>;<MA_period>,<MA_type>
+#   ARROWS          // <parameters>;<indicator_file>;<long_buffer>,<short_buffer>
+#
+# The 'indicator definition' must follow the format required for its type, as described above.
+
+# In this example, the following BL, ENTRY, CONF, VOL and EXIT sections can be left blank because only
+# ENTRY_PERMS are considered when Entry_Permutations is set to 'True'. If you include any indicator entries
+# they will be ignored.
+BL:
+
+ENTRY:
+
+CONF:
+
+VOL:
+
+EXIT:
+
+
+# Enable testing of all ENTRY + CONF permutations? (True/False)
+#
+# If 'Entry_Permutations' is set to True, all permutations of the indicators listed in "ENTRY_PERMS" (see below)
+# will be tested against each other. Each indicator will act as ENTRY in one test and as CONF in another.
+#
+# This is especially useful when you've identified the top-N ENTRY indicators and want to find the best-performing pairs.
+# Be mindful that the number of test cases grows quadratically with N, as P(N, 2) = N × (N - 1), so don't pick a very large N.
+#
+# Example:
+# ENTRY_PERMS:
+# ENTRY1 | ... | ...
+# ENTRY2 | ... | ...
+# ENTRY3 | ... | ...
+#
+# P(3, 2) yields:
+# {ENTRY1, ENTRY1}, {ENTRY1, ENTRY2}, {ENTRY1, ENTRY3},
+# {ENTRY2, ENTRY1}, {ENTRY2, ENTRY2}, {ENTRY2, ENTRY3},
+# {ENTRY3, ENTRY1}, {ENTRY3, ENTRY2}, {ENTRY3, ENTRY3}
+#
+# If 'Entry_Permutations' is True, the 'ENTRY' and 'CONF' sections elsewhere in the configuration must be left blank.
+
+Entry_Permutations: True
+
+# A list of indicators to permute as ENTRY and CONF when 'Entry_Permutations' is enabled.
+# Leave blank if 'Entry_Permutations' is set to False.
+ENTRY_PERMS:
+    - FX_SNIPERS_ERGODIC_CCI_b1x0 |ONELEVELCROSS| ;Test_Indicators\\FX Sniper's Ergodic_CCI;1;0
+    - QQEA_SAME_AS_QQE |TWOLINESCROSS| ;Test_Indicators\\QQEA;1,2
+    - RVI_b1 |ONELEVELCROSS| ;memo\\C\\RVI;1;0
+    - RVI_b2 |ONELEVELCROSS| ;memo\\C\\RVI;2;0
+    - HURST-INDICATOR_b1x0 |ONELEVELCROSS| ;memo\\C\\hurst-indicator;1;0
+    - HURST-INDICATOR_b2x0 |ONELEVELCROSS| ;memo\\C\\hurst-indicator;2;0
+    - HURST-INDICATOR_b3x0 |ONELEVELCROSS| ;memo\\C\\hurst-indicator;3;0
+    - HURST-INDICATOR_b4x0 |ONELEVELCROSS| ;memo\\C\\hurst-indicator;4;0
+    - HURST-INDICATOR_b5x0 |ONELEVELCROSS| ;memo\\C\\hurst-indicator;5;0
+    - HURST-INDICATOR_b6x0 |ONELEVELCROSS| ;memo\\C\\hurst-indicator;6;0

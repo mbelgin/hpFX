@@ -1,0 +1,105 @@
+# hpFX Simulation Configuration File  
+  
+# IMPORTANT:
+#  - Command-line arguments take precedence over this input file.
+#  - Only the parameters listed here are supported. Any additional keys, even if valid for terminal.exe, will be ignored.
+
+# The main category name for this collection of tests. You can run other simulations and organize them under this category.
+# All results in this category will be stored in a folder named after the category, so avoid special characters.
+# You can name it anything. For example: My_Test_Runs, Entry_Only, Entry_Conf, BL_Entry_Conf, Entry_Conf_Vol, etc.
+#
+# Note: There’s no need to organize by time range, since hpFX automatically separates results into subfolders per time range.
+#
+# OPTIONAL: if left blank, all tests will be placed in the same root results directory
+TestCategory: My_Test_Runs
+  
+# 'testUniqueName' is a unique name you can give to this test. Folders for configurations and results are named after it.  
+# Make sure you use a unique name to prevent overwriting previously created results, especially if you are running  
+# variations of the same test.  
+# IMPORTANT:
+#     - Give it a unique name if you are running a single simulation using this configuration
+#     - Leave it BLANK if you are planning to use this configuration as an input template for bin/test_case_maker.py
+#TestUniqueName: test_001
+TestUniqueName:
+
+# The name of the hpFX EA, which is required. It can be cound under the MT4 folder of hpFX distributions.    
+TestExpert: hpFX_Engine.ex4
+
+# A Expert Advisor (EA) 'Set' file (*.set) that's prepared for the hpFX_Engine_v[*] EA. See the documentation for instructions
+# Provided as a relative path to <global_shared_folder>\\tester\\<mt4_results_folder>
+# REQUIRED
+# MANAGED BY TEST MAKER (alias: EXPERT_FILE)  
+TestExpertParameters: Set_Files\\my_test_EA_properties.set
+  
+# Custom currency pairs list. Scroll down to the end of this file to see examples (e.g, 'ALL').
+# You can create your own lists in a similar way and keep them in this configuration
+# Do NOT list specific symbols here, just the name of the list.
+# REQUIRED  
+TestSymbolsList: TEST  
+  
+# Matches the values in "Period:" drop down list exactly (e.g. M15, H1, H4, Daily, etc)  
+# Currently only Daily is supported!  
+# REQUIRED  
+TestPeriod: Daily  
+  
+# Options corresponding to the "Model:" drop down list  
+# Important: "Control Points" is fast but not as accurate as EveryTick.  
+# 0: Every tick  
+# 1: Control Points  
+# 2: Open prices only  
+# REQUIRED  
+TestModel: 0  
+  
+# Options corresponding to the "Spread:" drop down list on the Strategy Tester interface
+# ('Current' is not recommended, especially during the after market hours)  
+# REQUIRED  
+TestSpread: 50  
+  
+# Toggle Optimization  
+# REQUIRED  
+TestOptimization: false  
+  
+# 'From' and 'To' dates, in 'YYYY.MM.DD' format. Please adhere to this format strictly.  
+# REQUIRED  
+TestFromDate: 2021.01.01  
+TestToDate: 2025.01.01  
+  
+# List of currency pairs
+ALL:  
+- AUDCAD
+- AUDCHF
+- AUDJPY
+- AUDNZD
+- AUDUSD
+- CADCHF
+- CADJPY
+- CHFJPY
+- EURGBP
+- EURAUD
+- EURCAD
+- EURCHF
+- EURJPY
+- EURNZD
+- EURUSD
+- GBPAUD
+- GBPCAD
+- GBPCHF
+- GBPJPY
+- GBPNZD
+- GBPUSD
+- NZDCAD
+- NZDCHF
+- NZDJPY
+- NZDUSD
+- USDCAD
+- USDCHF
+- USDJPY
+TEST: 
+- EURUSD
+- USDJPY
+- GBPUSD
+- USDCHF
+- USDCAD
+- AUDUSD
+- NZDUSD
+- GBPJPY
