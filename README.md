@@ -218,7 +218,8 @@ To reverse this behavior, prefix the buffer index with a minus sign (`-`).
 
 **Definition:** The `SLOPE` category is used to generate Buy/Sell signals based on the direction of an indicator’s slope. Most indicators that produce a continuous line, including many used as baselines, can be applied this way. Unlike `BASELINECROSS`, `SLOPE` also works with indicators that are not plotted directly on the price chart.
 
->[!warning] The `SLOPE` category can only be used with indicators that store all values in a single, continuous buffer. It is not suitable for indicators that alternate between two buffers. For those, use the `HISTOGRAM` category, which correctly captures their behavior.
+> [!WATNING]
+> The `SLOPE` category can only be used with indicators that store all values in a single, continuous buffer. It is not suitable for indicators that alternate between two buffers. For those, use the `HISTOGRAM` category, which correctly captures their behavior.
 
 Example: 
 
@@ -453,7 +454,8 @@ While the use of a third‑party data manager is beyond the scope of this docume
 
 ![QuantDataManager interface](Media/quantdatamanager_interface.webp)
 
-[!danger]  Once the data export is complete, you must immediately set the newly generated HST and FXT files to **Read Only** before running any backtests. If MT4 is launched with writable HST/FXT files, it will silently overwrite them with its own versions, which may differ from the downloaded high-quality data. This can lead to inconsistent or invalid backtest results. You can confirm the files are correctly protected by enabling the "Attributes" column in Windows Explorer, which should display "RA". QuantDataManager automatically sets FXT files as Read Only, but the behavior of other tools may vary.
+> [!CAUTION]  
+> Once the data export is complete, you must immediately set the newly generated HST and FXT files to **Read Only** before running any backtests. If MT4 is launched with writable HST/FXT files, it will silently overwrite them with its own versions, which may differ from the downloaded high-quality data. This can lead to inconsistent or invalid backtest results. You can confirm the files are correctly protected by enabling the "Attributes" column in Windows Explorer, which should display "RA". QuantDataManager automatically sets FXT files as Read Only, but the behavior of other tools may vary.
 
 ![File attributes showing read-only](Media/file_attributes_readonly.webp)
 ![File attributes read-only detail view](Media/file_attributes_readonly_detail.webp)
@@ -487,9 +489,11 @@ This interface allows users to make changes before running the simulation, and t
 
 ![Set file configuration example](Media/set_file_configuration.webp)
 
-> [!important] We recommend running a single case manually to confirm that all indicators function properly and no syntax issues arise, before launching large scale batch experiments. 
+> [!IMPORTANT]
+> We recommend running a single case manually to confirm that all indicators function properly and no syntax issues arise, before launching large scale batch experiments. 
 
-> [! information] Sample indicators and a Set file for this example are distributed with hpFX repository under the `Example_Simulation` folder.
+> [!NOTE]
+> Sample indicators and a Set file for this example are distributed with hpFX repository under the `Example_Simulation` folder.
 
 You can find these test indicators in hpFX's `Example_Simulation` folder and copy them to `MQL4\Indicators` under your `global_shared_folder`. This will allow you to run a test case manually to test your hpFX setup. 
  
