@@ -124,9 +124,10 @@ These types are explored in detail in the following sections.
 
 **`INDICATOR_FILE_AND_BUFFERS`:** The indicator filename and which buffers to use. The filename must be given relative to `<mq4_data_folder>\MQL4\Indicators`. This field consists of three parts, separated by semicolons (`;`)
 
-[! warning] hpFX support for custom indicator parameters is a work in progress. Currently, hpFX only works with default indicator settings. If you want to test an indicator with non-default parameters, you can create a copy, apply your changes, and save it with those settings as the default. The `TBD_leave_blank` fields in the following sections are placeholders for this future feature and must be left blank for now.]
+[!WARNING] 
+hpFX support for custom indicator parameters is a work in progress. Currently, hpFX only works with default indicator settings. If you want to test an indicator with non-default parameters, you can create a copy, apply your changes, and save it with those settings as the default. The `TBD_leave_blank` fields in the following sections are placeholders for this future feature and must be left blank for now.]
 
-[!warning] MT4 uses zero-based indexing for buffers, starting from `buffer #0`. In contrast, hpFX uses one-based indexing, so MT4’s `buffer #0` corresponds to `buffer #1` in hpFX, `buffer #1` maps to `buffer #2`, and so on. 
+[!WARNING] MT4 uses zero-based indexing for buffers, starting from `buffer #0`. In contrast, hpFX uses one-based indexing, so MT4’s `buffer #0` corresponds to `buffer #1` in hpFX, `buffer #1` maps to `buffer #2`, and so on. 
 
 
 ##### `BASELINECROSS`
