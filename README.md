@@ -124,10 +124,10 @@ These types are explored in detail in the following sections.
 
 **`INDICATOR_FILE_AND_BUFFERS`:** The indicator filename and which buffers to use. The filename must be given relative to `<mq4_data_folder>\MQL4\Indicators`. This field consists of three parts, separated by semicolons (`;`)
 
->[! warning] hpFX support for custom indicator parameters is a work in progress. Currently, hpFX only works with default indicator settings. If you want to test an indicator with non-default parameters, you can create a copy, apply your changes, and save it with those settings as the default. The `TBD_leave_blank` fields in the following sections are placeholders for this future feature and must be left blank for now.]
+[! warning] hpFX support for custom indicator parameters is a work in progress. Currently, hpFX only works with default indicator settings. If you want to test an indicator with non-default parameters, you can create a copy, apply your changes, and save it with those settings as the default. The `TBD_leave_blank` fields in the following sections are placeholders for this future feature and must be left blank for now.]
 
->[!warning] MT4 uses zero-based indexing for buffers, starting from `buffer #0`. In contrast, hpFX uses one-based indexing, so MT4’s `buffer #0` corresponds to `buffer #1` in hpFX, `buffer #1` maps to `buffer #2`, and so on. 
->
+[!warning] MT4 uses zero-based indexing for buffers, starting from `buffer #0`. In contrast, hpFX uses one-based indexing, so MT4’s `buffer #0` corresponds to `buffer #1` in hpFX, `buffer #1` maps to `buffer #2`, and so on. 
+
 
 ##### `BASELINECROSS`
 
@@ -451,7 +451,7 @@ While the use of a third‑party data manager is beyond the scope of this docume
 
 ![QuantDataManager interface](Media/quantdatamanager_interface.webp)
 
->[!danger]  Once the data export is complete, you must immediately set the newly generated HST and FXT files to **Read Only** before running any backtests. If MT4 is launched with writable HST/FXT files, it will silently overwrite them with its own versions, which may differ from the downloaded high-quality data. This can lead to inconsistent or invalid backtest results. You can confirm the files are correctly protected by enabling the "Attributes" column in Windows Explorer, which should display "RA". QuantDataManager automatically sets FXT files as Read Only, but the behavior of other tools may vary.
+[!danger]  Once the data export is complete, you must immediately set the newly generated HST and FXT files to **Read Only** before running any backtests. If MT4 is launched with writable HST/FXT files, it will silently overwrite them with its own versions, which may differ from the downloaded high-quality data. This can lead to inconsistent or invalid backtest results. You can confirm the files are correctly protected by enabling the "Attributes" column in Windows Explorer, which should display "RA". QuantDataManager automatically sets FXT files as Read Only, but the behavior of other tools may vary.
 
 ![File attributes showing read-only](Media/file_attributes_readonly.webp)
 ![File attributes read-only detail view](Media/file_attributes_readonly_detail.webp)
