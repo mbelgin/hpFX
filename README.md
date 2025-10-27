@@ -1,4 +1,4 @@
-### Overview
+# High Performance FX (hpFX) Overview
 
 **HighPerformanceFX (hpFX)** is an open source, high-performance, indicator-based simulation framework for backtesting large numbers of indicators across multiple currency pairs and historical time periods. 
 
