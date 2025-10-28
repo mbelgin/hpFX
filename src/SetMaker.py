@@ -165,87 +165,6 @@ def make_indi_cases(config):
         for t in trade_representations:
             print(t)
 
-
-        # trade_representations.append(zip(signal_cases, conf1_cases))
-    # ---------------------------
-    # BACKUP        # Check for incompatibilities between inputs and selected TestMode
-    # BACKUP        if (config.SIGNAL is not None) and (config.CONFIRMATION1 is not None):
-    # BACKUP            # Linear SIGNAL+CONFIRMATION1 case
-    # BACKUP            if not isinstance(config.SIGNAL, list):
-    # BACKUP                config.SIGNAL = list(config.SIGNAL)
-    # BACKUP            if not isinstance(config.CONFIRMATION1, list):
-    # BACKUP                config.CONFIRMATION1 = list(config.CONFIRMATION1)
-    # BACKUP
-    # BACKUP            if len(config.SIGNAL) != len(config.CONFIRMATION1):
-    # BACKUP                logging.error("For SIGNAL+CONFIRMATION1 cases, the number of SIGNAL (={}) and CONFIRMATION1 (={}) lists must "
-    # BACKUP                              "match.".format(len(config.SIGNAL), len(config.CONFIRMATION1)))
-    # BACKUP                sys.exit(113)
-    # BACKUP            signal_conf_cases = []
-    # BACKUP            for e1, e2 in zip(config.SIGNAL, config.CONFIRMATION1):
-    # BACKUP                entry_fields = identify_indi_parameters(e1, 'SIGNAL')
-    # BACKUP                conf_fields = identify_indi_parameters(e2, 'SIGNAL')
-    # BACKUP                # Correction for old C1s becoming the new C2s
-    # BACKUP                conf_fields['CONFIRMATION1'] = conf_fields['SIGNAL']
-    # BACKUP                conf_fields.pop('SIGNAL')
-    # BACKUP                entry_fields['SIGNAL_USAGE'] = usage_class['SIGNAL']
-    # BACKUP                conf_fields['CONFIRMATION1_USAGE'] = usage_class['CONFIRMATION']
-    # BACKUP                signal_conf_cases.append((entry_fields, conf_fields))
-    # BACKUP        elif (config.SIGNAL is not None) and (config.CONFIRMATION1 is None):
-    # BACKUP            # SIGNAL-Only case
-    # BACKUP            if not isinstance(config.SIGNAL, list):
-    # BACKUP                config.SIGNAL = list(config.SIGNAL)
-    # BACKUP            signal_cases = []
-    # BACKUP            for e in config.SIGNAL:
-    # BACKUP                entry_fields = identify_indi_parameters(e, 'SIGNAL')
-    # BACKUP                entry_fields['SIGNAL_USAGE'] = usage_class['SIGNAL']
-    # BACKUP                signal_cases.append(entry_fields)
-    # BACKUP        else:
-    # BACKUP            logging.error("No valid indicator combinations found. You must specify at least one SIGNAL indicator. "
-    # BACKUP                          "Please check your input file and try again.")
-    # BACKUP            sys.exit(115)
-    # BACKUP
-    # BACKUP    # Volume indicator(s)
-    # BACKUP    v_cases = []
-    # BACKUP    if config.TRADEORNOT is not None:
-    # BACKUP        if not isinstance(config.TRADEORNOT, list):
-    # BACKUP            config.TRADEORNOT = list(config.TRADEORNOT)
-    # BACKUP        v_cases = []
-    # BACKUP        for vol in config.TRADEORNOT:
-    # BACKUP            v_fields = identify_indi_parameters(vol, 'TRADEORNOT')
-    # BACKUP            # DEBUG print("===  TRADEORNOT TUPLE=", v_fields)
-    # BACKUP            v_fields['TRADEORNOT_USAGE'] = usage_class['TRADEORNOT']
-    # BACKUP            v_cases.append(v_fields)
-    # BACKUP
-    # BACKUP    # Exit indicator(s)
-    # BACKUP    exit_cases = []
-    # BACKUP    if config.EXIT is not None:
-    # BACKUP        if not isinstance(config.EXIT, list):
-    # BACKUP            config.EXIT = list(config.EXIT)
-    # BACKUP        exit_cases = []
-    # BACKUP        for e in config.EXIT:
-    # BACKUP            e_fields = identify_indi_parameters(e, 'EXIT')
-    # BACKUP            # DEBUG print("===  EXIT TUPLE=", e_fields)
-    # BACKUP            e_fields['EXIT_USAGE'] = usage_class['EXIT']
-    # BACKUP            exit_cases.append(e_fields)
-    # ------------------------
-
-    # STUPID CHECK if len(permutation_cases) == 0 and len(signal_cases) == 0:
-    # STUPID CHECK     logging.error("ERROR: No Signal or Permutation cases detected, check the configuration file")
-    # STUPID CHECK     sys.exit(118)
-
-    # There can be only one 'ENTRY_PERMS', 'ENTRY+CONF' OR 'ENTRY'
-    # RETIRED found = 0
-    # RETIRED if len(permutation_cases) > 0:
-    # RETIRED     found += 1
-    # RETIRED if len(signal_conf_cases) > 0:
-    # RETIRED     found += 1
-    # RETIRED if len(signal_cases):
-    # RETIRED     found += 1
-    # RETIRED if found > 1:
-    # RETIRED     logging.error("There can be only one case for 'ENTRY_PERMS', 'SIGNAL+CONFIRMATION1' OR 'SIGNAL', but found more. This looks like "
-    # RETIRED                   "a bug in this software, please contact the developer.")
-    # RETIRED     sys.exit(120)
-    # RETIRED
     all_cases = []
     all_cases.append(trade_representations)
     # if permutation_cases:
@@ -332,10 +251,6 @@ def create_experiment_files(config, all_indi_combos):
 
         print("Creating set file  : ", abs_set_fn)
         print("Creating yaml file : ", abs_yaml_fn)
-
-        # Set the experiment type
-        # RETIRED experiment_type = {"TEST_MODE": config.test_mode}
-        # RETIRED modify_fields_in_place(experiment_type, tmp_set_file)
 
         shutil.move(tmp_set_file, abs_set_fn)
 
