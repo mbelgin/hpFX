@@ -828,9 +828,6 @@ ExpertsPath: INPUTS_FOR_HPFX_ALL_SIMULATIONS_ENTRY+C+V
 ## For example, TestMode=2 will fail if BL is missing, since it's the only entry trigger in that mode.  
 ## However, it's valid to omit Entry in this mode, as Confirmation and Volume/Volatility can still be used to confirm the trade.  
 ## If Exit is missing, trades will close when the Take Profit (TP) defined in the .set file is reached.  
-
-## RETIRED!! 
-TestMode: 1  
   
 ## List of indicators to be used in the simulations.  
 ##  
