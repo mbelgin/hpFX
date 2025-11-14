@@ -7,6 +7,12 @@ These results can be replicated using the input files:
 * Simulation Input: `hpfx_Regression_Sim.yaml`
 * Properties Set file: `regression_properties.set`
 
+These results are generated using the time period: 
+
+`TestFromDate: 2021.01.01`
+
+`TestToDate: 2024.01.01`
+
 The following results are obtained using Tick resolution data downloaded using the QuantDataManager. 
 
 Your results may vary, depending on the data resource, resolution and/or broker-specific variables.
