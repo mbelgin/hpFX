@@ -1,4 +1,4 @@
-### Overview
+# High Performance FX (hpFX) Overview
 
 **HighPerformanceFX (hpFX)** is an open source, high-performance, indicator-based simulation framework for backtesting large numbers of indicators across multiple currency pairs and historical time periods. 
 
@@ -124,10 +124,12 @@ These types are explored in detail in the following sections.
 
 **`INDICATOR_FILE_AND_BUFFERS`:** The indicator filename and which buffers to use. The filename must be given relative to `<mq4_data_folder>\MQL4\Indicators`. This field consists of three parts, separated by semicolons (`;`)
 
->[! warning] hpFX support for custom indicator parameters is a work in progress. Currently, hpFX only works with default indicator settings. If you want to test an indicator with non-default parameters, you can create a copy, apply your changes, and save it with those settings as the default. The `TBD_leave_blank` fields in the following sections are placeholders for this future feature and must be left blank for now.]
+> [!WARNING] 
+> hpFX support for custom indicator parameters is a work in progress. Currently, hpFX only works with default indicator settings. If you want to test an indicator with non-default parameters, you can create a copy, apply your changes, and save it with those settings as the default. The `TBD_leave_blank` fields in the following sections are placeholders for this future feature and must be left blank for now.]
 
->[!warning] MT4 uses zero-based indexing for buffers, starting from `buffer #0`. In contrast, hpFX uses one-based indexing, so MT4’s `buffer #0` corresponds to `buffer #1` in hpFX, `buffer #1` maps to `buffer #2`, and so on. 
->
+> [!WARNING] 
+> MT4 uses zero-based indexing for buffers, starting from `buffer #0`. In contrast, hpFX uses one-based indexing, so MT4’s `buffer #0` corresponds to `buffer #1` in hpFX, `buffer #1` maps to `buffer #2`, and so on. 
+
 
 ##### `BASELINECROSS`
 
@@ -216,7 +218,8 @@ To reverse this behavior, prefix the buffer index with a minus sign (`-`).
 
 **Definition:** The `SLOPE` category is used to generate Buy/Sell signals based on the direction of an indicator’s slope. Most indicators that produce a continuous line, including many used as baselines, can be applied this way. Unlike `BASELINECROSS`, `SLOPE` also works with indicators that are not plotted directly on the price chart.
 
->[!warning] The `SLOPE` category can only be used with indicators that store all values in a single, continuous buffer. It is not suitable for indicators that alternate between two buffers. For those, use the `HISTOGRAM` category, which correctly captures their behavior.
+> [!WATNING]
+> The `SLOPE` category can only be used with indicators that store all values in a single, continuous buffer. It is not suitable for indicators that alternate between two buffers. For those, use the `HISTOGRAM` category, which correctly captures their behavior.
 
 Example: 
 
@@ -451,7 +454,8 @@ While the use of a third‑party data manager is beyond the scope of this docume
 
 ![QuantDataManager interface](Media/quantdatamanager_interface.webp)
 
->[!danger]  Once the data export is complete, you must immediately set the newly generated HST and FXT files to **Read Only** before running any backtests. If MT4 is launched with writable HST/FXT files, it will silently overwrite them with its own versions, which may differ from the downloaded high-quality data. This can lead to inconsistent or invalid backtest results. You can confirm the files are correctly protected by enabling the "Attributes" column in Windows Explorer, which should display "RA". QuantDataManager automatically sets FXT files as Read Only, but the behavior of other tools may vary.
+> [!CAUTION]  
+> Once the data export is complete, you must immediately set the newly generated HST and FXT files to **Read Only** before running any backtests. If MT4 is launched with writable HST/FXT files, it will silently overwrite them with its own versions, which may differ from the downloaded high-quality data. This can lead to inconsistent or invalid backtest results. You can confirm the files are correctly protected by enabling the "Attributes" column in Windows Explorer, which should display "RA". QuantDataManager automatically sets FXT files as Read Only, but the behavior of other tools may vary.
 
 ![File attributes showing read-only](Media/file_attributes_readonly.webp)
 ![File attributes read-only detail view](Media/file_attributes_readonly_detail.webp)
@@ -485,9 +489,11 @@ This interface allows users to make changes before running the simulation, and t
 
 ![Set file configuration example](Media/set_file_configuration.webp)
 
-> [!important] We recommend running a single case manually to confirm that all indicators function properly and no syntax issues arise, before launching large scale batch experiments. 
+> [!IMPORTANT]
+> We recommend running a single case manually to confirm that all indicators function properly and no syntax issues arise, before launching large scale batch experiments. 
 
-> [! information] Sample indicators and a Set file for this example are distributed with hpFX repository under the `Example_Simulation` folder.
+> [!NOTE]
+> Sample indicators and a Set file for this example are distributed with hpFX repository under the `Example_Simulation` folder.
 
 You can find these test indicators in hpFX's `Example_Simulation` folder and copy them to `MQL4\Indicators` under your `global_shared_folder`. This will allow you to run a test case manually to test your hpFX setup. 
  
@@ -822,9 +828,6 @@ ExpertsPath: INPUTS_FOR_HPFX_ALL_SIMULATIONS_ENTRY+C+V
 ## For example, TestMode=2 will fail if BL is missing, since it's the only entry trigger in that mode.  
 ## However, it's valid to omit Entry in this mode, as Confirmation and Volume/Volatility can still be used to confirm the trade.  
 ## If Exit is missing, trades will close when the Take Profit (TP) defined in the .set file is reached.  
-
-## RETIRED!! 
-TestMode: 1  
   
 ## List of indicators to be used in the simulations.  
 ##  
