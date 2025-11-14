@@ -37,59 +37,6 @@ hpFXTemplate: ..\Example_Simulation\hpfx_EXAMPLE_SINGLE_BATCH.yaml
 
 ExpertsPath: INPUTS_FOR_HPFX_PERMUTATIONS
 
-
-
-
-
-
-
-
-
-
-
-
-
-# RETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIRED
-
-# Test modes that define how indicators are used and in what order.
-
-# TestMode: 1  
-# Entry → Conf, BL, Vol → Exit  
-# Enter when the Entry indicator signals a Buy/Sell, and all of Confirmation, Baseline, and Volatility indicators agree. 
-# Exit when the Exit indicator signals.
-
-# TestMode: 2  
-# BL → Entry, Conf, Vol → Exit  
-# Enter when the Baseline indicator signals a Buy/Sell, and Entry, Confirmation, and Volatility indicators agree. 
-# Exit when the Exit indicator signals.
-
-# TestMode: 3  
-# Entry | BL → Conf, Vol → Exit  
-# Enter when either Entry OR Baseline triggers a signal, and both Confirmation and Volatility indicators agree. 
-# Exit when the Exit indicator signals.
-# In all modes, at least one indicator that defines the Entry condition is required.
-# Missing optional indicators are silently ignored.
-# For example, TestMode=2 will fail if BL is missing, since it's the only entry trigger in that mode.
-# However, it's valid to omit Entry in this mode, as Confirmation and Volatility can still be used to confirm the trade.
-# If Exit is missing, trades will close when the Take Profit (TP) defined in the .set file is reached.
-# TestMode: 1
-# RETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIREDRETIRED
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # List of indicators to be used in the simulations.
 #
 # Indicators must be organized under the following required categories:
