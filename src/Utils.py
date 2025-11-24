@@ -241,3 +241,92 @@ def update_hpfx_csv_headers(src_set, dest_csv):
     tmp_file.close()
 
     shutil.move(tmp_fn, dest_csv)
+
+
+def postprocess_results(conf):
+    """
+    Process HTM reports to generate RESULTS.csv and individual TRADES.csv files.
+    Calculates Sharpe Ratios (Monthly and Annual) when enabled in configuration.
+
+    Args:
+        conf: GlobalConfig object containing test configuration and paths
+
+    Writes:
+        - RESULTS.csv: Summary metrics for all symbols (includes Sharpe ratios if enabled)
+        - {SYMBOL}_TRADES.csv: Individual trade data per symbol in htm_reports folder
+    """
+    import os
+    import logging
+    from src import HTMParser
+
+    # Display Sharpe Ratio configuration status
+    if conf.calculate_sharpe:
+        print("\n=== Sharpe Ratio Calculation Enabled ===")
+        print("Risk-free rate: {:.2%}".format(conf.risk_free_rate))
+        print("Test period: {} to {}".format(conf.date_from, conf.date_to))
+        print("Calculating Monthly and Annual Sharpe Ratios...")
+        print("==========================================\n")
+
+    # Track symbols with Sharpe calculation warnings
+    sharpe_warnings = []
+    trades_processed = 0
+
+    for s in conf.symbols:
+        if s in conf.htm_reports.keys():
+            html_report = conf.htm_reports[s]
+            parsed_results = HTMParser(html_report)
+
+            try:
+                summary_output, trades_output = parsed_results.htm_to_csv(
+                    calculate_sharpe=conf.calculate_sharpe,
+                    risk_free_rate=conf.risk_free_rate,
+                    date_from=conf.date_from,
+                    date_to=conf.date_to
+                )
+
+                # Write summary to RESULTS.csv
+                dict_to_csv(summary_output, conf.test_report_csv)
+
+                # Write individual trades to {SYMBOL}_TRADES.csv in htm_reports folder
+                if len(trades_output) > 0:
+                    symbol_trades_csv = os.path.join(conf.abs_reports_folder, "{}_TRADES.csv".format(s))
+                    dict_to_csv(trades_output, symbol_trades_csv, overwrite=True)
+                    trades_processed += len(trades_output)
+                    print("Processed {} - {} trades extracted".format(s, len(trades_output)))
+                else:
+                    print("Processed {} - No trades found".format(s))
+
+                # Check if Sharpe calculation had issues
+                if conf.calculate_sharpe and summary_output[0].get('Shrp(A-mo)') == 'N/A':
+                    sharpe_warnings.append(s)
+
+            except Exception as e:
+                logging.error("Error processing HTM report for {}: {}".format(s, e))
+                print("ERROR: Failed to process {}".format(s))
+                continue
+
+        else:
+            logging.warning("Missing the HTM report for {}".format(s))
+            print("WARNING: Missing HTM report for {}".format(s))
+
+    # Display completion summary
+    print("\nResults written to: {}".format(conf.test_report_csv))
+
+    if trades_processed > 0:
+        print("Trades written to:  {}/<SYMBOL>_TRADES.csv".format(conf.abs_reports_folder))
+        print("Total trade rows:   {}".format(trades_processed))
+
+    # Display Sharpe calculation warnings
+    if conf.calculate_sharpe:
+        print("\n--- Sharpe Ratio Calculation Summary ---")
+        if len(sharpe_warnings) == 0:
+            print("SUCCESS: All symbols calculated successfully")
+        else:
+            print("WARNING: {} symbol(s) could not calculate Sharpe:".format(len(sharpe_warnings)))
+            for symbol in sharpe_warnings:
+                print("  - {}".format(symbol))
+            print("\nPossible reasons:")
+            print("  * Test period < 1 year (Annual Sharpe)")
+            print("  * Insufficient closed trades (< 2 periods)")
+            print("  * All returns identical (zero std deviation)")
+            print("\nCheck logs for detailed error messages.")

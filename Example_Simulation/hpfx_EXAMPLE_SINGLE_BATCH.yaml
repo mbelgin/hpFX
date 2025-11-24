@@ -20,7 +20,7 @@ TestCategory: My_Test_Runs
 #     - Give it a unique name if you are running a single simulation using this configuration
 #     - Leave it BLANK if you are planning to use this configuration as an input template for bin/test_case_maker.py
 #TestUniqueName: test_001
-TestUniqueName:
+TestUniqueName: 
 
 # The name of the hpFX EA, which is required. It can be cound under the MT4 folder of hpFX distributions.    
 TestExpert: hpFX_Engine.ex4
