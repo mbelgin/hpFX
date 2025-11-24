@@ -41,12 +41,11 @@ TestSymbolsList: ALL
 TestPeriod: Daily
 
 # Options corresponding to the "Model:" drop down list
-# Important: "Control Points" is the recommended setting for tests with Daily candles
 # 0: Every tick
 # 1: Control Points
 # 2: Open prices only
 # REQUIRED
-TestModel: 1
+TestModel: 0
 
 # Options corresponding to the "Spread:" drop down list
 # ('Current' is not recommended, especially during the after market hours)
@@ -61,6 +60,13 @@ TestOptimization: false
 # REQUIRED
 TestFromDate: 2016.01.01
 TestToDate: 2022.01.01
+
+# Sharpe Ratio Configuration (OPTIONAL)
+# When enabled, calculates both Monthly and Annual Sharpe Ratios from individual trades
+# Monthly Sharpe: Best for strategies with 4+ trades per year
+# Annual Sharpe: Only calculated if test period >= 1 year
+CalculateSharpe: false
+RiskFreeRate: 0.02  # Annual risk-free rate as decimal (e.g., 0.02 for 2%, 0.0 for 0%)
 
 # "ALL" Pairs
 ALL:
@@ -106,5 +112,3 @@ MAJOR:
 
 SHORTLIST:
   - AUDCAD
-
-  

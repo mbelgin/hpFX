@@ -39,7 +39,6 @@ def parse_arguments():
     parser.add_argument("-b", "--bugfix", action='store_true', help="Starts hpFX in debugging node. generates "
                                                                     "verbose output and keeps MT4 open after tests.")
 
-
     # Different args group that can be listed as 'required' as a workaround for argparse's annoying
     # 'everything is considered optional' assumption.
     required_args = parser.add_argument_group('Required Arguments')
@@ -73,6 +72,10 @@ class GlobalConfig:
         self.date_to = None
         self.work_inputs = []
 
+        # Sharpe Ratio configuration parameters (v1.0)
+        self.calculate_sharpe = False
+        self.risk_free_rate = 0.0
+
         # Global (system) configuration parameters
         self.global_config = os.path.join("../config", "global_config.yaml")
         # Where to keep all configurations and processed results
@@ -97,6 +100,7 @@ class GlobalConfig:
         self.is_debug = False
         self.htm_reports = {}
         self.test_report_csv = None
+        self.trades_report_csv = None  # v1.0: Added for individual trades export
         # Absolute path for the test specific folder
         self.abs_test_specific_folder = None
         # Relative path for the test specific folder (terminal.exe only supports relative paths to save reports)
@@ -129,7 +133,7 @@ class GlobalConfig:
         self.experts_path = None
         self.abs_experts_path = None
         self.bat_file = None
-        #BL IS RETIRED self.BL = None
+        # BL IS RETIRED self.BL = None
         self.ENTRY_PERMS = None
         self.SIGNAL = None
         self.CONF1 = None
@@ -157,7 +161,7 @@ class GlobalConfig:
             self.expert_config = args['expertconfig']
 
         if args['pairs'] is not None:
-            #self.pairs = args['pairs'].split(',')
+            # self.pairs = args['pairs'].split(',')
             self.symbols = args['pairs'].split(',')
 
         if args['timeframe'] is not None:
@@ -205,7 +209,7 @@ class GlobalConfig:
 
         # abs_test_specific_folder is the parent dir for htm_reports and ini_files (named after the date range)
         # E.g. C:\Users\mehme\Documents\hpFX_Shared\tester\hpFX_tester\TEST\C1_ASH\20160101-20200101
-        #print("category_results_folder: ", self.category_results_folder)
+        # print("category_results_folder: ", self.category_results_folder)
 
         self.abs_test_specific_folder = os.path.join(self.global_shared_folder, 'tester', self.category_results_folder,
                                                      self.testUniqueName)
@@ -221,7 +225,7 @@ class GlobalConfig:
         # E.g. hpFX_tester\TEST\C1_ASH\20160101-20200101
         self.relative_test_specific_folder = os.path.join(self.category_results_folder, self.testUniqueName)
 
-        #DEBUG print("relative_test_specific_folder: ", self.relative_test_specific_folder)
+        # DEBUG print("relative_test_specific_folder: ", self.relative_test_specific_folder)
 
     def ingest_global_config(self):
         tmp_args = Utils.open_yaml(self.global_config)
@@ -231,7 +235,7 @@ class GlobalConfig:
         # DON'T PREPEND TESTER HERE!!
         self.mt4_results_folder = tmp_args['mt4_results_folder']
         self.abs_mt4_results_folder = os.path.join(self.global_shared_folder, 'tester', self.mt4_results_folder)
-        #print("abs_mt4_results_folder: ", self.abs_mt4_results_folder)
+        # print("abs_mt4_results_folder: ", self.abs_mt4_results_folder)
         self.global_history_folder = os.path.join(tmp_args['global_history_folder'], 'history')
         self.global_tester_history_folder = os.path.join(tmp_args['global_history_folder'], 'tester', 'history')
         self.broker_server = tmp_args['broker_server']
@@ -242,7 +246,7 @@ class GlobalConfig:
 
         app_data_root = os.path.join(os.getenv('APPDATA'), 'MetaQuotes', 'Terminal')
         for t in range(self.num_terminals):
-            name = "MT4_Core_{}".format(t+1)
+            name = "MT4_Core_{}".format(t + 1)
             path = tmp_args['mt4_terminals'][t]
             path = path.rstrip('/').rstrip('\\')
             # exe = os.path.join(path, 'hpFX_terminal.exe')
@@ -250,8 +254,9 @@ class GlobalConfig:
             unique_name = Utils.data_folder_name(path)
             data_folder = os.path.join(app_data_root, unique_name)
             if not os.path.exists(data_folder):
-                logging.error("Unable to identify data folder {} location for '{}'. Please check the path you provided in "
-                              "'global_config.yaml' file. Do not use double quotes in this path.".format(data_folder, path))
+                logging.error(
+                    "Unable to identify data folder {} location for '{}'. Please check the path you provided in "
+                    "'global_config.yaml' file. Do not use double quotes in this path.".format(data_folder, path))
                 sys.exit(11)
             tmp_terminal = Terminal.Terminal(name, path, exe, data_folder)
             self.terminals.append(tmp_terminal)
@@ -319,6 +324,10 @@ class GlobalConfig:
         self.testCategory = tmp_args['TestCategory']
         self.category_results_folder = os.path.join(self.mt4_results_folder, self.testCategory)
 
+        # v1.0: Ingest Sharpe Ratio configuration (optional parameters with defaults)
+        self.calculate_sharpe = tmp_args.get('CalculateSharpe', False)
+        self.risk_free_rate = tmp_args.get('RiskFreeRate', 0.0)
+
     def ingest_test_maker_config(self, custom_config_fn):
         """
         This configuration is meant to be used for 'test_case_maker.py' only. It ingests the provided input to decide
@@ -349,7 +358,8 @@ class GlobalConfig:
         #                                                  self.test_case_expert_template)
         # Design change: no longer requiring a path relative to mt4_results_folder.
         self.abs_test_case_expert_template = os.path.abspath(self.test_case_expert_template)
-        self.abs_experts_path = os.path.join(self.global_shared_folder, 'tester', self.mt4_results_folder, self.experts_path)
+        self.abs_experts_path = os.path.join(self.global_shared_folder, 'tester', self.mt4_results_folder,
+                                             self.experts_path)
 
         if not os.path.exists(self.abs_experts_path):
             os.makedirs(self.abs_experts_path)
@@ -384,7 +394,6 @@ class GlobalConfig:
         self.VOL = tmp_args['VOL']
         self.EXIT = tmp_args['EXIT']
         self.Entry_Permutations = tmp_args['Entry_Permutations']
-
 
         self.bat_file = tmp_args['TestBatFile']
         if os.path.splitext(self.bat_file)[1] != '.bat':
@@ -452,7 +461,7 @@ class GlobalConfig:
 
         # Move the expert parameters file and test YAML configuration to results folders as a backup/reference
         # TODO: CONSIDER DOING THIS AFTER CHECKING IF A RUN IS NEEDED
-        #print("DEBUG Copying {} -> {} ".format(self.abs_expert_path, self.abs_test_specific_folder))
+        # print("DEBUG Copying {} -> {} ".format(self.abs_expert_path, self.abs_test_specific_folder))
 
         try:
             # Moved below due to the need for symbol-specific set files
@@ -461,15 +470,17 @@ class GlobalConfig:
         except shutil.SameFileError:
             pass
 
-        # The filename to keep the parsed results
+        # The filenames to keep the parsed results
         self.test_report_csv = os.path.join(self.abs_test_specific_folder, "RESULTS.csv")
+        self.trades_report_csv = os.path.join(self.abs_test_specific_folder,
+                                              "TRADES.csv")  # v1.0: Added for individual trades
 
         # Identify if the request if for a new set of symbols, or repairing a set with missing results.
         # print("DEBUG >>> self.symbols: {}".format(self.symbols))
         if os.path.exists(self.test_report_csv):
             if self.is_repair:
                 results_dict = Utils.csv_to_dict(self.test_report_csv)
-                #print("DEBUG >>> results_dict: {}".format(results_dict))
+                # print("DEBUG >>> results_dict: {}".format(results_dict))
                 for line in results_dict:
                     # Sometimes a symbol is processed, but the result may be blank
                     if int(line['Total trades']) == 0:
@@ -527,7 +538,7 @@ class GlobalConfig:
             except shutil.SameFileError:
                 pass
 
-            Utils.modify_fields_in_place({"MT4_ID": mt4_id_counter},  tmp_symbol_set_fn_abs)
+            Utils.modify_fields_in_place({"MT4_ID": mt4_id_counter}, tmp_symbol_set_fn_abs)
             mt4_id_counter += 1
 
             self.work_inputs.append(tmp_symbol_ini_fn)
