@@ -5,20 +5,20 @@
 # Please don't include thousands of indicators here, the startup time of terminals will be impacted and MT4 has a
 # certain limit for the number of indicators anyways. Just put what you need for backtesting.
 # This folder can be kept in a cloud storage if desired.
-#global_shared_folder: C:\Users\User\Documents\hpFX_Shared
-global_shared_folder: C:\fn
+
+global_shared_folder: C:\SHARED
 
 
 # >>> GLOBAL HISTORY FOLDER <<<
 # MT4 history folder to keep chart history data (both '<data_folder>\history' and '<data_folder>\tester\history')
 # Note that this directory can get very big in size (hundreds of GBs, and even more), especially if you use tick data
 # spanning several years. It's kept separate from 'global_shared_folder', so you can keep it on a different drive.
-global_history_folder: F:\HPFX_SHARED_FXT_HST
+global_history_folder: C:\HISTORY
 
 
 # >>> BROKER SERVER AND LOGIN INFORMATION <<<
 # IMPORTANT: This information must match exactly what you used to register hpFX
-broker_server: OANDA-Demo-1
+broker_server: Demo-1
 broker_login: XXXXXXX
 broker_password: XXXXXXX
 
@@ -37,22 +37,11 @@ mt4_results_folder: hpFX_results
 #
 # IMPORTANT: DO NOT USE AN INSTALLATION THAT IS ALSO USED FOR TRADING. hpFX will DESTROY all settings.
 mt4_terminals:
-    - C:\Program Files (x86)\FXChoice-C01
-    - C:\Program Files (x86)\FXChoice-C02
-    - C:\Program Files (x86)\FXChoice-C03
-    - C:\Program Files (x86)\FXChoice-C04
-    - C:\Program Files (x86)\FXChoice-C05
-    - C:\Program Files (x86)\FXChoice-C06
-    - C:\Program Files (x86)\FXChoice-C07
-    - C:\Program Files (x86)\FXChoice-C08
-    - C:\Program Files (x86)\FXChoice-C09
-    - C:\Program Files (x86)\FXChoice-C10
-    - C:\Program Files (x86)\FXChoice-C11
-    - C:\Program Files (x86)\FXChoice-C12
-    - C:\Program Files (x86)\FXChoice-C13
-    - C:\Program Files (x86)\FXChoice-C14
-    - C:\Program Files (x86)\FXChoice-C15
-    - C:\Program Files (x86)\FXChoice-C16
+    - C:\Program Files (x86)\MT4INSTALLATION-C01
+    - C:\Program Files (x86)\MT4INSTALLATION-C02
+    - C:\Program Files (x86)\MT4INSTALLATION-C03
+    - C:\Program Files (x86)\MT4INSTALLATION-C04
+
 
 # If a MT4 instance is already open, hpFX cannot start use it for testing. To prevent this from happening, hpFX
 # must close all open instances first. This should only impact the installations you configured here. If you have other
