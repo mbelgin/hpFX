@@ -1,0 +1,1 @@
+Belgin, M. (2026). hpFX: A parallel orchestration framework for indicator-based Forex simulations. Computational Economics. https://doi.org/10.1007/s10614-025-11261-z

@@ -1,0 +1,12 @@
+TY  - JOUR
+AU  - Belgin, Mehmet
+PY  - 2026
+DA  - 2026/03/10
+TI  - hpFX: A Parallel Orchestration Framework for Indicator-Based Forex Simulations
+JO  - Computational Economics
+AB  - We present High Performance Forex (hpFX), an open source parallelized framework that removes long-standing barriers to large-scale, systematic exploration of indicator-based Forex trading strategies. Built on the MetaTrader 4 (MT4) platform, hpFX leverages one of the largest collections of commercially and community-developed indicators, high-quality tick data, and broker-specific execution properties to replicate live trading conditions without requiring coding or tool modification. This contrasts with most academic approaches, which often rely on ideal but unrealistic assumptions. Its indicator-agnostic Expert Advisor incorporates nearly all MT4-compatible indicators in flexible ways, enabling diverse role assignments and signal interpretations. hpFX can automate and parallelize very large numbers of simulations, assembling strategies from interchangeable components such as indicator roles, risk models, and trade logic. Parallel execution yields significant performance gains, making high-accuracy testing feasible at scales impractical for manual workflows. To demonstrate its batch capabilities, we applied hpFX to 285 test cases on 12 currency pairs over 4 years, producing 3,420 simulations. Even this modest scope would take weeks or months to run manually and would almost certainly introduce human errors. Despite the limited experimental scope, hpFX revealed several promising, generalizable indicators that offer more optimal performance than alternatives commonly found in the literature. hpFX paves the way for a broad venue for academic and practical applications, enabling discovery, evaluation, and optimization of superior indicator-based trading strategies.
+SN  - 1572-9974
+UR  - https://doi.org/10.1007/s10614-025-11261-z
+DO  - 10.1007/s10614-025-11261-z
+ID  - Belgin2026
+ER  -

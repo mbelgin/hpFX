@@ -1,5 +1,14 @@
 # High Performance FX (hpFX) 
 
+## Cite Us
+
+If you use hpFX in your research, please cite our *Computational Economics* paper ([DOI: 10.1007/s10614-025-11261-z](https://doi.org/10.1007/s10614-025-11261-z)). 
+Citation files:
+* [BibTeX](CITATION.bib) 
+* [RIS](CITATION.ris) 
+* [Plain text](CITATION.txt) 
+* [CFF](CITATION.cff)
+
 ## Overview
 
 **HighPerformanceFX (hpFX)** is an open source, high-performance, indicator-based simulation framework for backtesting large numbers of indicators across multiple currency pairs and historical time periods. 
